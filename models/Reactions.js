@@ -1,19 +1,28 @@
-const { Schema, models, model } = require('mongoose')
+const { Schema, Types } = require('mongoose')
 
-const reactionsSchema = new Schema({
-    Reactions: {},
-    email: {},
-    thoughts: [],
-    friends: [],
-},
-{
+
+const ReactionsSchema = new Schema({
+    reactionId: {
+        type: Types.ObjectId,
+        default: new Types.ObjectId()
+    },
+    reactionText: {
+        type: String,
+        required: true,
+        maxlength: 280
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+},{
     toJSON: {
-        virtuals: true,
+        getters: true,
     }
 })
 
-const Reactions = model(
-    "reactions", reactionsSchema
-)
-
-module.exports = Reactions
+module.exports = ReactionsSchema
